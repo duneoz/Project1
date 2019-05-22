@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./moment.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">Yo Mama's Dank Cooking</h1>
+                    <p class="lead">Holla for some sick recipes</p>
+                </div>
+            </div>
+        
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Current Employee</li>
+                    <li class="list-group-item">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col-md">Employee Name</th>
+                                <th scope="col-md">Role</th>
+                                <th scope="col-md">Start Date</th>
+                                <th scope="col-md">Months Worked</th>
+                                <th scope="col-md">Monthly Rate</th>
+                                <th scope="col-md">Total Billed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="col">
+            <div class="card">
+                <div id="submit-form" class="card-header">
+                    Add Employee
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="employeeName">Employee Name</label>
+                        <input type="text" class="form-control" id="employee-name" placeholder="First Last">
+                    </div>
+                    <div class="form-group">
+                        <label for="jobTitle">Role</label>
+                        <input type="text" class="form-control" id="job-title" placeholder="Job Title">
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="text" class="form-control" id="start-date" placeholder="mm//dd/yyyy">
+                    </div>
+                    <div class="form-group">
+                        <label for="monthRate">Monthly Rate</label>
+                        <input type="text" class="form-control" id="monthly-wage" placeholder="$">
+                    </div>
+                    <button type="submit" id="submit-button" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./firebase.js"></script>
+</body>
+</html>
