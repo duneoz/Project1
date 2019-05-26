@@ -1,11 +1,51 @@
 <!DOCTYPE html>>
 <html>
     <head>
-
+            <style>
+                    /* Always set the map height explicitly to define the size of the div
+                     * element that contains the map. */
+                    #map {
+                      height: 100%;
+                    }
+                    /* Optional: Makes the sample page fill the window. */
+                    html, body {
+                      height: 100%;
+                      margin: 0;
+                      padding: 0;
+                    }
+                  </style>
     </head>
     <body>
+    <div id="map"></div>
+    <script>
+
+        /* --- CREATE MAP QUERY CONSTANTS --- */
+
+        const apiKey = "AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50";
+        const lattitude = 45.522927;
+        const longitude = -122.661278;
+        const initZoom = 13;
+
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: lattitude, lng: longitude},
+            zoom: initZoom,
+            mapTypeControl: false,
+            scaleControl: true,
+            streetViewControl: false,
+            fullscreenControl: false
+        });
+      }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50&callback=initMap">
+    </script>
         
-        <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=Portland%2C%20OR&key=AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50" allowfullscreen></iframe>
-        
+        <!--
+        <iframe width="600" height="450" frameborder="0" style="border:0" 
+            src="https://www.google.com/maps/embed/v1/view?&key=AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50&center=45.522927, -122.661278&zoom=13&disableDefaultUI=true" allowfullscreen>
+        </iframe>
+        -->
+
     </body>
 </html>
