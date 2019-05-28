@@ -2,12 +2,84 @@
 <html>
     <head>
         <title>Poppin Portland</title>
+        <!--Materialize CSS-->
+        <link rel="stylesheet" type="text/css" href="assets/materialize/css/materialize.css">
+        <!--PP CSS-->
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+        <!--Icons-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
+    <main>      
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo center">What's Popping Portland?!</a>
+                <ul class="left hide-on-med-and-down">
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="badges.html">Components</a></li>
+                <li class="active"><a href="collapsible.html">JavaScript</a></li>
+                </ul>
+            </div>
+        </nav>
 
-    
-        <div id="map"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col s1" id="logo-area"><img id="logo" src="assets/images/logoPP.jpg"></div>
+                <div class="col s8" id="map-area">
+                    <div id="map"></div>
+                    <a class="waves-effect waves-light btn-small"><i class="material-icons left">filter_hdr</i>hikes</a>
+                    <a class="waves-effect waves-light btn-small"><i class="material-icons left">local_drink</i>breweries</a>
+                    <a class="waves-effect waves-light btn-small"><i class="material-icons left">local_bar</i>winery</a>
+                    <a class="waves-effect waves-light btn-small"><i class="material-icons left">restaurant</i>restaraunts</a>
+                    <a class="waves-effect waves-light btn-small"><i class="material-icons left">smoking_rooms</i>dispensaries</a>
+                </div>
+                <div class="col s3" id="social-media-area"><h5>Social Feed</h5>   
+                    <div class="card-panel teal">
+                        <span class="white-text">I am a very simple card. I am good at containing small bits of information.
+                        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+                        INPUT TWITTER HERE!
+                        </span>
+                    </div>
+                </div>
+        </div>
+    </main> 
+
+        <footer class="page-footer">
+            <div class="container">
+                <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">This is the foot</h5>
+                    <p class="grey-text text-lighten-4">It smell good.</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+
+                </div>
+                </div>
+            </div>
+
+            <div class="footer-copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col s6">
+                            © 2019 Poppin' Portland
+                        </div>
+                        <div id="author-footer-align" class="col s1">
+                                Authors:
+                        </div>
+                        <div class="col s5">
+                                <a class="grey-text text-lighten-3" href="#!">JonHadi</a>
+                                <a class="grey-text text-lighten-3" href="#!">Rebecca</a>
+                                <a class="grey-text text-lighten-3" href="#!">Nick</a>
+                                <a class="grey-text text-lighten-3" href="#!">Terence</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
 
         <!-- CODE FOR GOOGLE MAPS AND MAP STYLING-->
         <script>
@@ -100,6 +172,6 @@
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50&callback=initMap">
         </script>
-        
+        <script type="text/javascript" href="assets/materialize/js/materialize.js"></script>
     </body>
 </html>
