@@ -1,9 +1,105 @@
-<!DOCTYPE html>>
+<!DOCTYPE html>
 <html>
     <head>
-
+        <title>Poppin Portland</title>
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     </head>
     <body>
+
+    
+        <div id="map"></div>
+
+        <!-- CODE FOR GOOGLE MAPS AND MAP STYLING-->
+        <script>
+
+            // create map query constants
+
+            const apiKey = "AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50";
+            const lattitude = 45.522927;
+            const longitude = -122.661278;
+            const initZoom = 13;
+
+        // create function to call map
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: lattitude, lng: longitude},
+                    zoom: initZoom,
+                    mapTypeControl: false,
+                    scaleControl: true,
+                    streetViewControl: false,
+                    fullscreenControl: false,
+                    
+        // custom styling of google map
+                    styles:[
+                        {
+                            "elementType": "labels.text.fill",
+                            "stylers": [{
+                                "color": "#808080"
+                            }]
+                        },
+                        {
+                            "featureType": "administrative",
+                            "elementType": "geometry",
+                            "stylers": [{
+                                "visibility": "off"
+                            }]
+                        },
+                        {
+                            "featureType": "landscape",
+                            "stylers": [{
+                                "visibility": "off"
+                            }]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "geometry.fill",
+                            "stylers": [{
+                                "color": "#d5d5d5"
+                            }]
+                        },
+                        {
+                            "featureType": "poi",
+                            "elementType": "labels.icon",
+                            "stylers": [{
+                                "visibility": "off"
+                            }]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry.fill",
+                            "stylers": [{
+                                "color": "#c0c0c0"
+                            }]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "geometry.stroke",
+                            "stylers": [{
+                                "color": "#979797"
+                            }]
+                        },
+                        {
+                            "featureType": "road.highway",
+                            "elementType": "labels.icon",
+                            "stylers": [{
+                                "visibility": "off"
+                            }]
+                        },
+                        {
+                            "featureType": "water",
+                            "elementType": "geometry.fill",
+                            "stylers": [{
+                                "color": "#9fb0b5"
+                            }]
+                        }
+                    ]
+                });
+            }
+
+        </script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50&callback=initMap">
+        </script>
         
     </body>
 </html>
