@@ -1,0 +1,40 @@
+/* Always set the map height explicitly to define the size of the div
+    * element that contains the map. */
+#map {
+    margin-top: 100px;
+    height: 500px;
+    width: 100%;
+}
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+}
+
+#logo {
+    margin-top: 5px;
+    width: 200%;
+}
+
+#social-media-area {
+    margin-top: 100px;
+}
+
+h5 {
+    margin-top: 0px;
+}
+
+#author-footer-align {
+    text-align: right;
+}
