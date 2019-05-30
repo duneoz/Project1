@@ -1,5 +1,4 @@
 var twitterLink = "https://twitter.com/";
-var brewHandle;
 
 function setTweets(brewery){
     $("#twitterHolder").empty();
@@ -9,6 +8,7 @@ function setTweets(brewery){
     newTimeline.attr("href", brewQuery);
     newTimeline.attr("data-width","300");
     newTimeline.attr("data-height","300");
+    newTimeline.attr("data-chrome","noheader nofooter");
     $(".twitter-timeline").text("Tweets by @"+brewery);
     $("#twitterHolder").html(newTimeline);
     twttr.widgets.load()

@@ -40,6 +40,9 @@
         <nav>
             <div class="nav-wrapper">
                 <a href="#!" class="brand-logo center">What's Popping Portland?!</a>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    <li><a href="#" class="modal-trigger" data-target="addBrew">Add Brewery</a></li>
+                </ul>
             </div>
         </nav>
 
@@ -62,7 +65,22 @@
                     </div>
                 </div>
         </div>
+    <!-- ADD BREWERY MODAL FORM -->
+    <div id="addBrew" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Add Brewery</h4>
+            <form id="newBrewForm">
+                <div class="input-field">
+                    <input type="text" id="brewNameInput" required />
+                    <label for="brewNameInput">Brewery Name</label>
+                </div>
+            </form>
+        </div>
+        <button class="btn">Add Brewery</button>
+    </div>    
     </main> 
+
+    
 
         <footer class="page-footer">
             <div class="container">
@@ -100,6 +118,7 @@
         
         <script type="text/javascript" src="./assets/javascript/gmaps.js"></script>
         <script type="text/javascript" src="./assets/javascript/twitter.js"></script>
+        <script type="text/javascript" src="./assets/javascript/addLocation.js"></script>
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50&callback=initMap">
         </script> 
