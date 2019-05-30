@@ -6,7 +6,8 @@ var brewery = {
     lat : 45.558850,
     lon : -122.642590,
     website : "https://www.greatnotionpdx.com",
-    summary : "the dankest place for beers"
+    summary : "the dankest place for beers",
+    handle : "GreatNotionPDX"
 }
 
 
@@ -133,6 +134,7 @@ function initMap() {
     });
     marker.addListener('click', function() {
       infowindow.open(map, marker);
+      setTweets(brewery.handle);
     });
 
     // var marker = new google.maps.Marker({
