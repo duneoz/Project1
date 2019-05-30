@@ -1,3 +1,4 @@
+//test site
 var brewery = {
     id : "1",
     class : "pin",
@@ -9,7 +10,52 @@ var brewery = {
     summary : "the dankest place for beers"
 }
 
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDovaxYLNRk4oqfkO5IDOVqtz-xrJqWZmM",
+    authDomain: "poppingportland.firebaseapp.com",
+    databaseURL: "https://poppingportland.firebaseio.com",
+    projectId: "poppingportland",
+    storageBucket: "poppingportland.appspot.com",
+    messagingSenderId: "802124358547",
+    appId: "1:802124358547:web:c0f30cfe7b30eecc"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.database();
 
+  var name, address, website, genre, description;
+
+  $('#submit-button').on("click", function(event) {
+    event.preventDefault();
+    console.log('get here');
+
+    name = $('#site-name').val();
+    address = $('#address').val();
+    website = $('#website').val();
+    genre = $('#genre').val();
+    description = $('#description').val();
+
+    var newSite = {
+        name,
+        address,
+        website,
+        genre,
+        description
+    }
+    console.log(newSite);
+
+    db.ref().push(newSite);
+
+    $('#site-name').val("");
+    $('#address').val("");
+    $('#website').val("");
+    $('#genre').val("");
+
+    $('#description').val("");
+    select.prop("", 0); //Sets the first option as selected
+    select.material_select();        //Update material select
+});
 
 //CODE FOR GOOGLE MAPS AND MAP STYLING
 
@@ -142,7 +188,6 @@ function initMap() {
     // });
 };
 
-
 // function addMarker(location, map) {
 //     // Add the marker at the clicked location, and add the next-available label
 //     // from the array of alphabetical characters.
@@ -166,6 +211,17 @@ function initMap() {
 //         this.infoWindow.close();
 //     }
 // });
+
+$(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+
+$(document).ready(function(){
+    $('select').formSelect();
+});
+
+
+
 
 
   
