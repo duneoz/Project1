@@ -26,7 +26,6 @@ var site = {
 
   $('#submit-button').on("click", function(event) {
     event.preventDefault();
-    console.log('get here');
 
     name = $('#site-name').val();
     address = $('#address').val();
@@ -36,7 +35,6 @@ var site = {
     handle = $('#handle').val();
 
     var gmapsAddress = address.split(' ').join('+');
-    console.log(gmapsAddress);
     var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
     + gmapsAddress +"&key=" + apiKey;
 
@@ -48,8 +46,6 @@ var site = {
         lat = response.results[0].geometry.location.lat;
         lon = response.results[0].geometry.location.lng;
 
-        console.log(lat+ "   " +lon);
-
         var newSite = {
             name,
             address,
@@ -60,7 +56,6 @@ var site = {
             lat,
             lon
         }
-        console.log(newSite);
     
         db.ref().push(newSite);
         
@@ -162,12 +157,16 @@ function initMap() {
         ]
     });
 
-    var myLatLng = {lat: site.lat, lng: site.lon};
+    //for creating new pins on map based on database
+    db.ref().on("child_added", function(snapshot) {
+        var newSite = snapshot.val();
 
-    var contentString = '<div id="content">'+
+        var myLatLng = {lat: newSite.lat, lng: newSite.lon};
+        
+        var contentString = '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
-        '<h5 id="firstHeading" class="firstHeading">'+site.name+'</h5>'+
+        '<h5 id="firstHeading" class="firstHeading">'+newSite.name+'</h5>'+
         '<div id="bodyContent">'+
         '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
         'sandstone rock formation in the southern part of the '+
@@ -179,30 +178,29 @@ function initMap() {
         'Aboriginal people of the area. It has many springs, waterholes, '+
         'rock caves and ancient paintings. Uluru is listed as a World '+
         'Heritage Site.</p>'+
-        '<p><a href='+site.website+'>'+
+        '<p><a href='+newSite.website+'>'+
         'click to visit website</a> '+
         '</p>'+
         '</div>'+
         '</div>';
-  
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-  
-    var marker = new google.maps.Marker({
-    //   position: uluru,
-    //   map: map,
-    //   title: 'Uluru (Ayers Rock)'
-      position: myLatLng,
-      map: map,
-      title: site.name
-    });
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-      setTweets(site.handle);
-    });
 
+        var infowindow = new google.maps.InfoWindow({
+        content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: newSite.name
+            });
+            marker.addListener('click', function() {
+            infowindow.open(map, marker);
+            setTweets(newSite.handle);
+            });
+
+    });
 };
+
 
 $(document).ready(function(){
     $('.sidenav').sidenav();
