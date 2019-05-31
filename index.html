@@ -69,84 +69,46 @@
                 </div>
         </div>
     <!-- ADD BREWERY MODAL FORM -->
-    <div id="addBrew" class="modal bottom-sheet">
+    <div id="addBrew" class="modal">
         <div class="modal-content">
-            <h4>Add Brewery</h4>
-            <form id="newBrewForm">
-                <div class="input-field">
-                    <input type="text" id="brewNameInput" required />
-                    <label for="brewNameInput">Brewery Name</label>
+            <div id="submit-form" class="card-header">
+                <h3>Add a Site</h3>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="site">Brewery/Winery Name</label>
+                    <input type="text" class="form-control" id="site-name" placeholder="Dank Brews">
                 </div>
-                <div class="input-field">
-                    <input type="text" id="brewAddressInput" required />
-                    <label for="brewAddressInput">Address</label>
+                <div class="form-group">
+                    <label for="destination">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="333 NW Dank Rd.">
                 </div>
-                <div class="input-field">
-                    <input type="url" id="brewWebInput" required />
-                    <label for="brewWebInput">Website</label>
+                <div class="form-group">
+                    <label for="firstTrain">Website</label>
+                    <input type="text" class="form-control" id="website" placeholder="https://dankbrews.com">
                 </div>
-                <div class="input-field">
-                    <input type="text" id="brewSummaryInput" required />
-                    <label for="brewSummaryInput">Summmary</label>
+                <div class="form-group">
+                    <label for="firstTrain">Twitter Handle</label>
+                    <input type="text" class="form-control" id="handle" placeholder="@Me">
                 </div>
-                <div class="input-field">
-                    <input type="text" id="brewHandleInput" required />
-                    <label for="brewHandleInput">Twitter Handle</label>
+                <div class="input-field col s12">
+                    <select id="genre">
+                        <option value="" disabled selected>Genre</option>
+                        <option value="Brewery">Brewery</option>
+                        <option value="Winery">Winery</option>
+                        <option value="Vineyard">Hike</option>
+                    </select>
+                    <label>Site Type</label>
                 </div>
+                <div class="form-group">
+                    <label for="frequency">Description</label>
+                    <input type="text" class="form-control" id="description" placeholder="The dankest brews">
+                </div>
+                <button type="submit" id="submit-button" class="modal-close btn btn-primary">Submit</button>
             </form>
         </div>
-        <button class="btn modal-close">Add Brewery</button>
     </div>    
     </main> 
-
-        <footer class="page-footer">
-            <div class="container">
-                <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">This is the foot</h5>
-                    <p class="grey-text text-lighten-4">It smell good.</p>
-                </div>
-                <div class="col l4 offset-l2 s12">
-
-    <ul id="slide-out" class="sidenav">
-        <div class="container">
-        <div class="card">
-        <div id="submit-form" class="card-header">
-            Add a Site
-        </div>
-        <form>
-            <div class="form-group">
-                <label for="site">Brewery/Winery Name</label>
-                <input type="text" class="form-control" id="site-name" placeholder="Dank Brews">
-            </div>
-            <div class="form-group">
-                <label for="destination">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="333 NW Dank Rd.">
-            </div>
-            <div class="form-group">
-                <label for="firstTrain">Website</label>
-                <input type="text" class="form-control" id="website" placeholder="https://dankbrews.com">
-            </div>
-            <div class="input-field col s12">
-                <select id="genre">
-                    <option value="" disabled selected>Genre</option>
-                    <option value="Brewery">Brewery</option>
-                    <option value="Winery">Winery</option>
-                    <option value="Vineyard">Vineyard</option>
-                </select>
-                <label>Site Type</label>
-            </div>
-            <div class="form-group">
-                <label for="frequency">Description</label>
-                <input type="text" class="form-control" id="description" placeholder="The dankest brews">
-            </div>
-            <button type="submit" id="submit-button" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-    </div> 
-    </ul>
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-
 
     <footer class="page-footer">
         <div class="container">

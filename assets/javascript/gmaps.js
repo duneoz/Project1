@@ -1,16 +1,13 @@
 //test site
-var brewery = {
-    id : "1",
-    class : "pin",
+var site = {
     name : "Great Notion Brewing and Barrel House",
-    address : "101, 5885, 2204 NE Alberta St, Portland, OR 97211",
+    address : "2204 NE Alberta St, Portland, OR 97211",
     lat : 45.558850,
     lon : -122.642590,
     website : "https://www.greatnotionpdx.com",
     summary : "the dankest place for beers",
     handle : "GreatNotionPDX"
 }
-
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDovaxYLNRk4oqfkO5IDOVqtz-xrJqWZmM",
@@ -25,7 +22,7 @@ var brewery = {
   firebase.initializeApp(firebaseConfig);
   var db = firebase.database();
 
-  var name, address, website, genre, description;
+  var name, address, website, genre, description, handle, lat, lon;
 
   $('#submit-button').on("click", function(event) {
     event.preventDefault();
@@ -36,26 +33,48 @@ var brewery = {
     website = $('#website').val();
     genre = $('#genre').val();
     description = $('#description').val();
+    handle = $('#handle').val();
 
-    var newSite = {
-        name,
-        address,
-        website,
-        genre,
-        description
-    }
-    console.log(newSite);
+    var gmapsAddress = address.split(' ').join('+');
+    console.log(gmapsAddress);
+    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    + gmapsAddress +"&key=" + apiKey;
 
-    db.ref().push(newSite);
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+        }).then(function(response) {
+        //console.log(response);
+        lat = response.results[0].geometry.location.lat;
+        lon = response.results[0].geometry.location.lng;
 
+        console.log(lat+ "   " +lon);
+
+        var newSite = {
+            name,
+            address,
+            website,
+            genre,
+            description,
+            handle,
+            lat,
+            lon
+        }
+        console.log(newSite);
+    
+        db.ref().push(newSite);
+        
+    });
+
+    $('#handle').val("");
     $('#site-name').val("");
     $('#address').val("");
     $('#website').val("");
     $('#genre').val("");
-
+    $('handle').val("");
     $('#description').val("");
-    select.prop("", 0); //Sets the first option as selected
-    select.material_select();        //Update material select
+    $('#genre').prop("", 0); //Sets the first option as selected
+    $('#genre').material_select();        //Update material select
 });
 
 //CODE FOR GOOGLE MAPS AND MAP STYLING
@@ -143,12 +162,12 @@ function initMap() {
         ]
     });
 
-    var myLatLng = {lat: brewery.lat, lng: brewery.lon};
+    var myLatLng = {lat: site.lat, lng: site.lon};
 
     var contentString = '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
-        '<h5 id="firstHeading" class="firstHeading">'+brewery.name+'</h5>'+
+        '<h5 id="firstHeading" class="firstHeading">'+site.name+'</h5>'+
         '<div id="bodyContent">'+
         '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
         'sandstone rock formation in the southern part of the '+
@@ -160,8 +179,8 @@ function initMap() {
         'Aboriginal people of the area. It has many springs, waterholes, '+
         'rock caves and ancient paintings. Uluru is listed as a World '+
         'Heritage Site.</p>'+
-        '<p><a href='+brewery.website+'>'+
-        'Brewery Link</a> '+
+        '<p><a href='+site.website+'>'+
+        'click to visit website</a> '+
         '</p>'+
         '</div>'+
         '</div>';
@@ -176,43 +195,14 @@ function initMap() {
     //   title: 'Uluru (Ayers Rock)'
       position: myLatLng,
       map: map,
-      title: brewery.name
+      title: site.name
     });
     marker.addListener('click', function() {
       infowindow.open(map, marker);
-      setTweets(brewery.handle);
+      setTweets(site.handle);
     });
 
-    // var marker = new google.maps.Marker({
-    //   position: myLatLng,
-    //   map: map,
-    //   title: brewery.name
-    // });
 };
-
-// function addMarker(location, map) {
-//     // Add the marker at the clicked location, and add the next-available label
-//     // from the array of alphabetical characters.
-//     var marker = new google.maps.Marker({
-//       position: location,
-//       label: labels[labelIndex++ % labels.length],
-//       map: map
-//     });
-// };
-    
-// map.addMarker({
-//     lat: brewery.lat,
-//     lng: brewery.lon,
-//     infoWindow: {
-//         content: brewery.name + brewery.summary
-//     },
-//     mouseover: function() {
-//         this.infoWindow.open(this.map, this);
-//     },
-//     mouseout: function() {
-//         this.infoWindow.close();
-//     }
-// });
 
 $(document).ready(function(){
     $('.sidenav').sidenav();
@@ -221,10 +211,6 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('select').formSelect();
 });
-
-
-
-
 
   
   
