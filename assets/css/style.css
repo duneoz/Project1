@@ -1,7 +1,7 @@
 /* Always set the map height explicitly to define the size of the div
     * element that contains the map. */
 #map {
-    margin-top: 100px;
+    margin-top: 13%;
     height: 500px;
     width: 100%;
 }
@@ -28,7 +28,7 @@ main {
 }
 
 #social-media-area {
-    margin-top: 100px;
+    margin-top: 7%;
 }
 
 h5 {
