@@ -157,6 +157,7 @@ function initMap() {
         ]
     });
 
+
     //for creating new pins on map based on database
     db.ref().on("child_added", function(snapshot) {
         var newSite = snapshot.val();
@@ -164,6 +165,7 @@ function initMap() {
         var myLatLng = {lat: newSite.lat, lng: newSite.lon};
         
         var contentString = '<div id="content">'+
+
         '<div id="siteNotice">'+
         '</div>'+
         '<h5 id="firstHeading" class="firstHeading">'+newSite.name+'</h5>'+
@@ -183,6 +185,44 @@ function initMap() {
         '</p>'+
         '</div>'+
         '</div>';
+  
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+  
+    // create a beerIcon object, set it to a beer glass icon
+    var beerIcon = {
+        url: 'https://cdn2.iconfinder.com/data/icons/fatcow/32x32/beer.png',
+        // This marker is 20 pixels wide by 32 pixels high.
+        size: new google.maps.Size(32, 32),
+        // The origin for this image is (0, 0).
+        origin: new google.maps.Point(0, 0),
+        // The anchor for this image is the base of the flagpole at (0, 32).
+        anchor: new google.maps.Point(0, 32)
+      };
+
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: brewery.name,
+      //set the icon to a beer glass icon
+     icon: beerIcon
+    });
+
+    //listen for a click and show the infowindow
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+      setTweets(brewery.handle);
+    });
+        
+    //on click event
+    $("#breweryBtn").click(function(){
+    console.log("heard the click");
+    $('img[src="'+beerIcon.url+'"]').toggle();
+})
+
+};
+   
 
         var infowindow = new google.maps.InfoWindow({
         content: contentString
@@ -201,14 +241,12 @@ function initMap() {
     });
 };
 
-
 $(document).ready(function(){
     $('.sidenav').sidenav();
   });
 
 $(document).ready(function(){
     $('select').formSelect();
+
 });
 
-  
-  

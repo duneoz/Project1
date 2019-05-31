@@ -38,3 +38,11 @@ h5 {
 #author-footer-align {
     text-align: right;
 }
+
+.s3 {
+    width: 25%;
+}
+
+.card-panel {
+    width: 100%;
+}
