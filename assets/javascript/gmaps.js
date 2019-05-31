@@ -143,8 +143,10 @@ function initMap() {
         ]
     });
 
+    //set myLatLng to brewery latlng
     var myLatLng = {lat: brewery.lat, lng: brewery.lon};
 
+    //set contentString to the information we want to populate in the infoWindow
     var contentString = '<div id="content">'+
         '<div id="siteNotice">'+
         '</div>'+
@@ -170,50 +172,39 @@ function initMap() {
       content: contentString
     });
   
+    // create a beerIcon object, set it to a beer glass icon
+    var beerIcon = {
+        url: 'https://cdn2.iconfinder.com/data/icons/fatcow/32x32/beer.png',
+        // This marker is 20 pixels wide by 32 pixels high.
+        size: new google.maps.Size(32, 32),
+        // The origin for this image is (0, 0).
+        origin: new google.maps.Point(0, 0),
+        // The anchor for this image is the base of the flagpole at (0, 32).
+        anchor: new google.maps.Point(0, 32)
+      };
+
     var marker = new google.maps.Marker({
-    //   position: uluru,
-    //   map: map,
-    //   title: 'Uluru (Ayers Rock)'
       position: myLatLng,
       map: map,
-      title: brewery.name
+      title: brewery.name,
+      //set the icon to a beer glass icon
+     icon: beerIcon
     });
+
+    //listen for a click and show the infowindow
     marker.addListener('click', function() {
       infowindow.open(map, marker);
       setTweets(brewery.handle);
     });
+        
+    //on click event
+    $("#breweryBtn").click(function(){
+    console.log("heard the click");
+    $('img[src="'+beerIcon.url+'"]').toggle();
+})
 
-    // var marker = new google.maps.Marker({
-    //   position: myLatLng,
-    //   map: map,
-    //   title: brewery.name
-    // });
 };
-
-// function addMarker(location, map) {
-//     // Add the marker at the clicked location, and add the next-available label
-//     // from the array of alphabetical characters.
-//     var marker = new google.maps.Marker({
-//       position: location,
-//       label: labels[labelIndex++ % labels.length],
-//       map: map
-//     });
-// };
-    
-// map.addMarker({
-//     lat: brewery.lat,
-//     lng: brewery.lon,
-//     infoWindow: {
-//         content: brewery.name + brewery.summary
-//     },
-//     mouseover: function() {
-//         this.infoWindow.open(this.map, this);
-//     },
-//     mouseout: function() {
-//         this.infoWindow.close();
-//     }
-// });
-
+   
 $(document).ready(function(){
     $('.sidenav').sidenav();
   });
@@ -221,10 +212,3 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('select').formSelect();
 });
-
-
-
-
-
-  
-  
