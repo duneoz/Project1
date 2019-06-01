@@ -28,11 +28,12 @@ main {
 }
 
 #social-media-area {
-    margin-top: 7%;
+    margin-top: 8%;
+    height: 500px;
 }
 
 h5 {
-    margin-top: 0px;
+    margin-top: 5px;
 }
 
 #author-footer-align {
