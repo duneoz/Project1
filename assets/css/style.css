@@ -46,3 +46,11 @@ h5 {
 .card-panel {
     width: 100%;
 }
+
+#txt {
+    border:none;
+    outline:none;
+ }
+ label[for="txt"] {
+    padding: 0 0 0 5px;
+ }

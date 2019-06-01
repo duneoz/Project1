@@ -147,7 +147,7 @@ function initMap() {
     
         // create a beerIcon object, set it to a beer glass icon
         var beerIcon = {
-            url: 'https://cdn2.iconfinder.com/data/icons/fatcow/32x32/beer.png',
+            url: 'assets/images/beer.png',
             // This marker is 20 pixels wide by 32 pixels high.
             size: new google.maps.Size(32, 32),
             // The origin for this image is (0, 0).
@@ -249,12 +249,43 @@ $(document).ready(function(){
   $('#submit-button').on("click", function(event) {
     event.preventDefault();
 
+    var preWebsite = "http://www.";
     name = $('#site-name').val();
     address = $('#address').val();
     website = $('#website').val();
-    genre = $('#genre').val();
+    genre = $("input[name='genre']:checked").val();
     description = $('#description').val();
     handle = $('#handle').val();
+
+    //input validation
+    if (handle.charAt(0) === "@") {
+        handle = handle.substr(1);
+    }
+    var dotCounter = 0, slashCounter = 0;
+    var webStart;
+    for(var i = 0; i < website.length; i++) {
+        console.log(website.charAt(i));
+        if (website.charAt(i) === ".") {
+            if (webStart === undefined) { 
+            webStart = i+1;
+            }
+            dotCounter++;
+            if(dotCounter === 2) {
+                website = website.substr(webStart);
+                break;
+            }
+        }
+        if (website.charAt(i) === "/") {
+            if (webStart === undefined) { 
+            webStart = i+2;
+            }
+            slashCounter++;
+            if(slashCounter === 2) {
+                website = website.substr(webStart);
+            }
+        }
+    }
+    website = preWebsite + website;
 
     var gmapsAddress = address.split(' ').join('+');
     var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
@@ -278,6 +309,8 @@ $(document).ready(function(){
             lat,
             lon
         }
+
+        console.log(newSite);
     
         db.ref().push(newSite);
         
@@ -291,5 +324,5 @@ $(document).ready(function(){
     $('handle').val("");
     $('#description').val("");
     $('#genre').prop("", 0); //Sets the first option as selected
-    $('#genre').material_select();        //Update material select
+    //$('#genre').material_select();        //Update material select
 });
