@@ -80,34 +80,50 @@
                     <h3>Add a Site</h3>
                 </div>
                 <form>
-                    <div class="form-group">
-                        <label for="site">Brewery/Winery Name</label>
-                        <input type="text" class="form-control" id="site-name" placeholder="Dank Brews">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">account_circle</i>
+                        <input id="site-name" type="text" class="validate">
+                        <label for="site-name">Brewery/Winery Name</label>
                     </div>
-                    <div class="form-group">
-                        <label for="destination">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="333 NW Dank Rd.">
+                    <div class="input-field col s6">
+                            <i class="material-icons prefix">edit_location</i>
+                            <input id="address" type="text" class="validate">
+                            <label for="address">Address</label>
                     </div>
-                    <div class="form-group">
-                        <label for="firstTrain">Website</label>
-                        <input type="text" class="form-control" id="website" placeholder="https://dankbrews.com">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">web</i>
+                        <input id="website" type="text" class="validate">
+                        <label for="website">Website</label>
                     </div>
-                    <div class="form-group">
-                        <label for="firstTrain">Twitter Handle</label>
-                        <input type="text" class="form-control" id="handle" placeholder="@Me">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">alternate_email</i>
+                        <input id="handle" type="text" class="validate">
+                        <label for="handle">Twitter Handle</label>
                     </div>
-                    <div class="input-field col s12">
-                        <select id="genre">
-                            <option value="" disabled selected>Genre</option>
-                            <option value="Brewery">Brewery</option>
-                            <option value="Winery">Winery</option>
-                            <option value="Vineyard">Hike</option>
-                        </select>
-                        <label>Site Type</label>
+
+                    <div class="input-field col s6">                   
+                        <form id="genre" action="#">
+                            <div class="row">
+                            <div class="col s6 push-s1"><h6>Genre</h6></div></div>
+                            <p>
+                                    <i class="material-icons prefix">lens</i> 
+                                <label>
+                                <input class="with-gap" name="genre" type="radio" value="Brewery"/>
+                                <span><img src="assets/images/beer.png"></span>
+                                </label>
+    
+                                <label>
+                                <input class="with-gap" name="genre" type="radio" value="Winery"/>
+                                <span><img src="assets/images/wine.png"></span>
+                                </label>
+                            </p>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="frequency">Description</label>
-                        <input type="text" class="form-control" id="description" placeholder="The dankest brews">
+                    
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">create</i>
+                        <input id="description" type="text" class="validate">
+                        <label for="description">Description</label>
                     </div>
                     <button type="submit" id="submit-button" class="modal-close btn btn-primary">Submit</button>
                 </form>
