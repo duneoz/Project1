@@ -1,16 +1,13 @@
 //test site
-var brewery = {
-    id : "1",
-    class : "pin",
+var site = {
     name : "Great Notion Brewing and Barrel House",
-    address : "101, 5885, 2204 NE Alberta St, Portland, OR 97211",
+    address : "2204 NE Alberta St, Portland, OR 97211",
     lat : 45.558850,
     lon : -122.642590,
     website : "https://www.greatnotionpdx.com",
     summary : "the dankest place for beers",
     handle : "GreatNotionPDX"
 }
-
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDovaxYLNRk4oqfkO5IDOVqtz-xrJqWZmM",
@@ -25,37 +22,54 @@ var brewery = {
   firebase.initializeApp(firebaseConfig);
   var db = firebase.database();
 
-  var name, address, website, genre, description;
+  var name, address, website, genre, description, handle, lat, lon;
 
   $('#submit-button').on("click", function(event) {
     event.preventDefault();
-    console.log('get here');
 
     name = $('#site-name').val();
     address = $('#address').val();
     website = $('#website').val();
     genre = $('#genre').val();
     description = $('#description').val();
+    handle = $('#handle').val();
 
-    var newSite = {
-        name,
-        address,
-        website,
-        genre,
-        description
-    }
-    console.log(newSite);
+    var gmapsAddress = address.split(' ').join('+');
+    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    + gmapsAddress +"&key=" + apiKey;
 
-    db.ref().push(newSite);
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+        }).then(function(response) {
+        //console.log(response);
+        lat = response.results[0].geometry.location.lat;
+        lon = response.results[0].geometry.location.lng;
 
+        var newSite = {
+            name,
+            address,
+            website,
+            genre,
+            description,
+            handle,
+            lat,
+            lon
+        }
+    
+        db.ref().push(newSite);
+        
+    });
+
+    $('#handle').val("");
     $('#site-name').val("");
     $('#address').val("");
     $('#website').val("");
     $('#genre').val("");
-
+    $('handle').val("");
     $('#description').val("");
-    select.prop("", 0); //Sets the first option as selected
-    select.material_select();        //Update material select
+    $('#genre').prop("", 0); //Sets the first option as selected
+    $('#genre').material_select();        //Update material select
 });
 
 //CODE FOR GOOGLE MAPS AND MAP STYLING
@@ -143,14 +157,24 @@ function initMap() {
         ]
     });
 
+<<<<<<< HEAD
     //set myLatLng to brewery latlng
     var myLatLng = {lat: brewery.lat, lng: brewery.lon};
 
     //set contentString to the information we want to populate in the infoWindow
     var contentString = '<div id="content">'+
+=======
+    //for creating new pins on map based on database
+    db.ref().on("child_added", function(snapshot) {
+        var newSite = snapshot.val();
+
+        var myLatLng = {lat: newSite.lat, lng: newSite.lon};
+        
+        var contentString = '<div id="content">'+
+>>>>>>> 88e63fec3e8e41fbe82bbbab50c2403970b0aa5c
         '<div id="siteNotice">'+
         '</div>'+
-        '<h5 id="firstHeading" class="firstHeading">'+brewery.name+'</h5>'+
+        '<h5 id="firstHeading" class="firstHeading">'+newSite.name+'</h5>'+
         '<div id="bodyContent">'+
         '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
         'sandstone rock formation in the southern part of the '+
@@ -162,11 +186,12 @@ function initMap() {
         'Aboriginal people of the area. It has many springs, waterholes, '+
         'rock caves and ancient paintings. Uluru is listed as a World '+
         'Heritage Site.</p>'+
-        '<p><a href='+brewery.website+'>'+
-        'Brewery Link</a> '+
+        '<p><a href='+newSite.website+'>'+
+        'click to visit website</a> '+
         '</p>'+
         '</div>'+
         '</div>';
+<<<<<<< HEAD
   
     var infowindow = new google.maps.InfoWindow({
       content: contentString
@@ -205,10 +230,38 @@ function initMap() {
 
 };
    
+=======
+
+        var infowindow = new google.maps.InfoWindow({
+        content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: newSite.name
+            });
+            marker.addListener('click', function() {
+            infowindow.open(map, marker);
+            setTweets(newSite.handle);
+            });
+
+    });
+};
+
+
+>>>>>>> 88e63fec3e8e41fbe82bbbab50c2403970b0aa5c
 $(document).ready(function(){
     $('.sidenav').sidenav();
   });
 
 $(document).ready(function(){
     $('select').formSelect();
+<<<<<<< HEAD
 });
+=======
+});
+
+  
+  
+>>>>>>> 88e63fec3e8e41fbe82bbbab50c2403970b0aa5c
