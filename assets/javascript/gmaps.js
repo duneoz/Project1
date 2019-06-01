@@ -8,6 +8,8 @@ var site = {
     summary : "the dankest place for beers",
     handle : "GreatNotionPDX"
 }
+
+/* ---- INIT FIREBASE ---- */
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDovaxYLNRk4oqfkO5IDOVqtz-xrJqWZmM",
@@ -24,58 +26,16 @@ var site = {
 
   var name, address, website, genre, description, handle, lat, lon;
 
-  $('#submit-button').on("click", function(event) {
-    event.preventDefault();
 
-    name = $('#site-name').val();
-    address = $('#address').val();
-    website = $('#website').val();
-    genre = $('#genre').val();
-    description = $('#description').val();
-    handle = $('#handle').val();
+/* ---- GOOGLE MAPS & STYLING ---- */
 
-    var gmapsAddress = address.split(' ').join('+');
-    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
-    + gmapsAddress +"&key=" + apiKey;
-
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-        }).then(function(response) {
-        //console.log(response);
-        lat = response.results[0].geometry.location.lat;
-        lon = response.results[0].geometry.location.lng;
-
-        var newSite = {
-            name,
-            address,
-            website,
-            genre,
-            description,
-            handle,
-            lat,
-            lon
-        }
-    
-        db.ref().push(newSite);
-        
-    });
-
-    $('#handle').val("");
-    $('#site-name').val("");
-    $('#address').val("");
-    $('#website').val("");
-    $('#genre').val("");
-    $('handle').val("");
-    $('#description').val("");
-    $('#genre').prop("", 0); //Sets the first option as selected
-    $('#genre').material_select();        //Update material select
-});
-
-//CODE FOR GOOGLE MAPS AND MAP STYLING
+// array of brew and wine markers
+var breweries=[];
+var brewOn=true;
+var wineries=[];
+var wineOn=false;
 
 // create map query constants
-
 const apiKey = "AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50";
 const lattitude = 45.522927;
 const longitude = -122.661278;
@@ -158,7 +118,7 @@ function initMap() {
     });
 
 
-    //for creating new pins on map based on database
+    /* --- CREATE PINS --- */
     db.ref().on("child_added", function(snapshot) {
         var newSite = snapshot.val();
 
@@ -186,60 +146,84 @@ function initMap() {
         '</div>'+
         '</div>';
   
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-  
-    // create a beerIcon object, set it to a beer glass icon
-    var beerIcon = {
-        url: 'https://cdn2.iconfinder.com/data/icons/fatcow/32x32/beer.png',
-        // This marker is 20 pixels wide by 32 pixels high.
-        size: new google.maps.Size(32, 32),
-        // The origin for this image is (0, 0).
-        origin: new google.maps.Point(0, 0),
-        // The anchor for this image is the base of the flagpole at (0, 32).
-        anchor: new google.maps.Point(0, 32)
-      };
-
-    var marker = new google.maps.Marker({
-      position: myLatLng,
-      map: map,
-      title: brewery.name,
-      //set the icon to a beer glass icon
-     icon: beerIcon
-    });
-
-    //listen for a click and show the infowindow
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-      setTweets(brewery.handle);
-    });
-        
-    //on click event
-    $("#breweryBtn").click(function(){
-    console.log("heard the click");
-    $('img[src="'+beerIcon.url+'"]').toggle();
-})
-
-};
-   
-
+        // create info window for pin
         var infowindow = new google.maps.InfoWindow({
         content: contentString
         });
+    
+        // create a beerIcon object, set it to a beer glass icon
+        var beerIcon = {
+            url: 'https://cdn2.iconfinder.com/data/icons/fatcow/32x32/beer.png',
+            // This marker is 20 pixels wide by 32 pixels high.
+            size: new google.maps.Size(32, 32),
+            // The origin for this image is (0, 0).
+            origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (0, 32).
+            anchor: new google.maps.Point(0, 32)
+        };
 
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: newSite.name
+        // create a wineIcon object, set it to a wine glass icon
+        var wineIcon = {
+            url: 'http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/256/Apps-wine-icon.png',
+            // This marker is 20 pixels wide by 32 pixels high.
+            size: new google.maps.Size(32, 32),
+            // The origin for this image is (0, 0).
+            origin: new google.maps.Point(0, 0),
+            // The anchor for this image is the base of the flagpole at (0, 32).
+            anchor: new google.maps.Point(0, 32)
+        };
+
+        // if brewery...
+        console.log(newSite.genre);
+        if(newSite.genre == "Brewery"){
+          // Create new marker from DB
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: newSite.name,
+                //set the icon to a beer glass icon
+                icon: beerIcon
             });
+            breweries.push(marker); 
             marker.addListener('click', function() {
-            infowindow.open(map, marker);
-            setTweets(newSite.handle);
+                infowindow.open(map, marker);
+                setTweets(newSite.handle);
+            }); 
+        } else {
+            // Create new marker from DB
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: newSite.name,
+                //set the icon to a beer glass icon
+                icon: wineIcon
             });
-
+            wineries.push(marker);
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+                setTweets(newSite.handle);
+            });             
+        }       
     });
-};
+
+    // set brewery button to toggle
+    $("#breweryBtn").click(function(){
+        console.log("heard the click");
+        if(brewOn){
+            for(i=0;i<breweries.length;i++){
+                breweries[i].setMap(null);
+            }
+        } else {
+            for(i=0;i<breweries.length;i++){
+                breweries[i].setMap(map);
+            }
+        }
+
+        brewOn = !brewOn;
+    }) 
+}
+
+/* --- HTML FUNCTIONALITY --- */
 
 $(document).ready(function(){
     $('.sidenav').sidenav();
@@ -250,3 +234,52 @@ $(document).ready(function(){
 
 });
 
+
+/* ---- ADD LOCATION TO FIREBASE FROM FORM ---- */
+  $('#submit-button').on("click", function(event) {
+    event.preventDefault();
+
+    name = $('#site-name').val();
+    address = $('#address').val();
+    website = $('#website').val();
+    genre = $('#genre').val();
+    description = $('#description').val();
+    handle = $('#handle').val();
+
+    var gmapsAddress = address.split(' ').join('+');
+    var queryURL = "https://maps.googleapis.com/maps/api/geocode/json?address="
+    + gmapsAddress +"&key=" + apiKey;
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+        }).then(function(response) {
+        //console.log(response);
+        lat = response.results[0].geometry.location.lat;
+        lon = response.results[0].geometry.location.lng;
+
+        var newSite = {
+            name,
+            address,
+            website,
+            genre,
+            description,
+            handle,
+            lat,
+            lon
+        }
+    
+        db.ref().push(newSite);
+        
+    });
+
+    $('#handle').val("");
+    $('#site-name').val("");
+    $('#address').val("");
+    $('#website').val("");
+    $('#genre').val("");
+    $('handle').val("");
+    $('#description').val("");
+    $('#genre').prop("", 0); //Sets the first option as selected
+    $('#genre').material_select();        //Update material select
+});
