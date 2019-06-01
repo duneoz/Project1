@@ -33,7 +33,7 @@ var site = {
 var breweries=[];
 var brewOn=true;
 var wineries=[];
-var wineOn=false;
+var wineOn=true;
 
 // create map query constants
 const apiKey = "AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50";
@@ -164,7 +164,7 @@ function initMap() {
 
         // create a wineIcon object, set it to a wine glass icon
         var wineIcon = {
-            url: 'http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/256/Apps-wine-icon.png',
+            url: 'assets/images/wine.png',
             // This marker is 20 pixels wide by 32 pixels high.
             size: new google.maps.Size(32, 32),
             // The origin for this image is (0, 0).
@@ -174,7 +174,6 @@ function initMap() {
         };
 
         // if brewery...
-        console.log(newSite.genre);
         if(newSite.genre == "Brewery"){
           // Create new marker from DB
             var marker = new google.maps.Marker({
@@ -208,7 +207,6 @@ function initMap() {
 
     // set brewery button to toggle
     $("#breweryBtn").click(function(){
-        console.log("heard the click");
         if(brewOn){
             for(i=0;i<breweries.length;i++){
                 breweries[i].setMap(null);
@@ -220,6 +218,21 @@ function initMap() {
         }
 
         brewOn = !brewOn;
+    }) 
+
+    // set winery button to toggle
+    $("#wineryBtn").click(function(){
+        if(wineOn){
+            for(i=0;i<wineries.length;i++){
+                wineries[i].setMap(null);
+            }
+        } else {
+            for(i=0;i<wineries.length;i++){
+                wineries[i].setMap(map);
+            }
+        }
+
+        wineOn = !wineOn;
     }) 
 }
 
