@@ -33,7 +33,8 @@ var site = {
 var breweries=[];
 var brewOn=true;
 var wineries=[];
-var wineOn=false;
+var wineOn=true;
+var allInfos=[];
 
 // create map query constants
 const apiKey = "AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50";
@@ -130,16 +131,7 @@ function initMap() {
         '</div>'+
         '<h5 id="firstHeading" class="firstHeading">'+newSite.name+'</h5>'+
         '<div id="bodyContent">'+
-        '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-        'sandstone rock formation in the southern part of the '+
-        'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-        'south west of the nearest large town, Alice Springs; 450&#160;km '+
-        '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-        'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-        'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-        'Aboriginal people of the area. It has many springs, waterholes, '+
-        'rock caves and ancient paintings. Uluru is listed as a World '+
-        'Heritage Site.</p>'+
+        '<p>'+newSite.description+'</p>'+
         '<p><a href='+newSite.website+'>'+
         'click to visit website</a> '+
         '</p>'+
@@ -150,6 +142,8 @@ function initMap() {
         var infowindow = new google.maps.InfoWindow({
         content: contentString
         });
+
+        allInfos.push(infowindow);
     
         // create a beerIcon object, set it to a beer glass icon
         var beerIcon = {
@@ -164,7 +158,7 @@ function initMap() {
 
         // create a wineIcon object, set it to a wine glass icon
         var wineIcon = {
-            url: 'http://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/256/Apps-wine-icon.png',
+            url: 'assets/images/wine.png',
             // This marker is 20 pixels wide by 32 pixels high.
             size: new google.maps.Size(32, 32),
             // The origin for this image is (0, 0).
@@ -174,7 +168,6 @@ function initMap() {
         };
 
         // if brewery...
-        console.log(newSite.genre);
         if(newSite.genre == "Brewery"){
           // Create new marker from DB
             var marker = new google.maps.Marker({
@@ -200,6 +193,9 @@ function initMap() {
             });
             wineries.push(marker);
             marker.addListener('click', function() {
+                for (i=0;i<allInfos.length;i++){
+                    allInfos[i].close();
+                }
                 infowindow.open(map, marker);
                 setTweets(newSite.handle);
             });             
@@ -208,7 +204,6 @@ function initMap() {
 
     // set brewery button to toggle
     $("#breweryBtn").click(function(){
-        console.log("heard the click");
         if(brewOn){
             for(i=0;i<breweries.length;i++){
                 breweries[i].setMap(null);
@@ -220,6 +215,21 @@ function initMap() {
         }
 
         brewOn = !brewOn;
+    }) 
+
+    // set winery button to toggle
+    $("#wineryBtn").click(function(){
+        if(wineOn){
+            for(i=0;i<wineries.length;i++){
+                wineries[i].setMap(null);
+            }
+        } else {
+            for(i=0;i<wineries.length;i++){
+                wineries[i].setMap(map);
+            }
+        }
+
+        wineOn = !wineOn;
     }) 
 }
 
