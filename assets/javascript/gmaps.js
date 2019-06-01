@@ -132,15 +132,16 @@ function initMap() {
         '<h5 id="firstHeading" class="firstHeading">'+newSite.name+'</h5>'+
         '<div id="bodyContent">'+
         '<p>'+newSite.description+'</p>'+
-        '<p><a href='+newSite.website+'>'+
-        'click to visit website</a> '+
+        '<p><a href='+newSite.website+' target="new">'+
+        newSite.website +'</a> '+
         '</p>'+
         '</div>'+
         '</div>';
   
         // create info window for pin
         var infowindow = new google.maps.InfoWindow({
-        content: contentString
+            content: contentString,
+            maxWidth: 300
         });
 
         allInfos.push(infowindow);
