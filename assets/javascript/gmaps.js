@@ -179,6 +179,9 @@ function initMap() {
             });
             breweries.push(marker); 
             marker.addListener('click', function() {
+                for (i=0;i<allInfos.length;i++){
+                    allInfos[i].close();
+                }
                 infowindow.open(map, marker);
                 setTweets(newSite.handle);
             }); 
