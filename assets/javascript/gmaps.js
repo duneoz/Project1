@@ -236,7 +236,6 @@ function initMap() {
 
     var card = document.getElementById('pac-card');
     var input = document.getElementById('pac-input');
-    console.log(input);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -251,62 +250,6 @@ function initMap() {
     var infowindow = new google.maps.InfoWindow();
     var infowindowContent = document.getElementById('infowindow-content');
     infowindow.setContent(infowindowContent);
-
-
-    autocomplete.addListener('place_changed', function() {
-      infowindow.close();
-      marker.setVisible(false);
-      var place = autocomplete.getPlace();
-      if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and
-        // pressed the Enter key, or the Place Details request failed.
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-
-      // If the place has a geometry, then present it on a map.
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
-      } else {
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);  // Why 17? Because it looks good.
-      }
-
-      var address = '';
-      if (place.address_components) {
-        address = [
-          (place.address_components[0] && place.address_components[0].short_name || ''),
-          (place.address_components[1] && place.address_components[1].short_name || ''),
-          (place.address_components[2] && place.address_components[2].short_name || '')
-        ].join(' ');
-      }
-
-      infowindowContent.children['place-icon'].src = place.icon;
-      infowindowContent.children['place-name'].textContent = place.name;
-      infowindowContent.children['place-address'].textContent = address;
-      infowindow.open(map, marker);
-    });
-
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
-    function setupClickListener(id, types) {
-      var radioButton = document.getElementById(id);
-      radioButton.addEventListener('click', function() {
-        autocomplete.setTypes(types);
-      });
-    }
-
-    setupClickListener('changetype-all', []);
-    setupClickListener('changetype-address', ['address']);
-    setupClickListener('changetype-establishment', ['establishment']);
-    setupClickListener('changetype-geocode', ['geocode']);
-
-    document.getElementById('use-strict-bounds')
-        .addEventListener('click', function() {
-            console.log('Checkbox clicked! New state=' + this.checked);
-            autocomplete.setOptions({strictBounds: this.checked});
-        });
-
 }
 
 /* --- HTML FUNCTIONALITY --- */
@@ -327,7 +270,7 @@ $(document).ready(function(){
 
     var preWebsite = "http://www.";
     name = $('#site-name').val();
-    address = $('#address').val();
+    address = $('#pac-input').val();
     website = $('#website').val();
     genre = $("input[name='genre']:checked").val();
     description = $('#description').val();
@@ -340,7 +283,6 @@ $(document).ready(function(){
     var dotCounter = 0, slashCounter = 0;
     var webStart;
     for(var i = 0; i < website.length; i++) {
-        console.log(website.charAt(i));
         if (website.charAt(i) === ".") {
             if (webStart === undefined) { 
             webStart = i+1;
@@ -371,7 +313,6 @@ $(document).ready(function(){
         url: queryURL,
         method: "GET"
         }).then(function(response) {
-        //console.log(response);
         lat = response.results[0].geometry.location.lat;
         lon = response.results[0].geometry.location.lng;
 
