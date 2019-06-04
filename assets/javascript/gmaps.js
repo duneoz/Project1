@@ -38,6 +38,7 @@ var allInfos=[];
 
 // create map query constants
 const apiKey = "AIzaSyDCbd6kaJ6PfibF3ul_mvkL5tPTkYyeV50";
+const apiLib = "&libraries=places";
 const lattitude = 45.522927;
 const longitude = -122.661278;
 const initZoom = 11;
@@ -179,6 +180,9 @@ function initMap() {
             });
             breweries.push(marker); 
             marker.addListener('click', function() {
+                for (i=0;i<allInfos.length;i++){
+                    allInfos[i].close();
+                }
                 infowindow.open(map, marker);
                 setTweets(newSite.handle);
             }); 
@@ -231,10 +235,27 @@ function initMap() {
 
         wineOn = !wineOn;
     }) 
+
+
+    var card = document.getElementById('pac-card');
+    var input = document.getElementById('pac-input');
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+
+    // Bind the map's bounds (viewport) property to the autocomplete object,
+    // so that the autocomplete requests use the current map bounds for the
+    // bounds option in the request.
+
+    // Set the data fields to return when the user selects a place.
+    autocomplete.setFields(
+        ['address_components', 'geometry', 'icon', 'name']);
+
+    var infowindow = new google.maps.InfoWindow();
+    var infowindowContent = document.getElementById('infowindow-content');
+    infowindow.setContent(infowindowContent);
 }
 
 /* --- HTML FUNCTIONALITY --- */
-
 $(document).ready(function(){
     $('.sidenav').sidenav();
   });
@@ -244,14 +265,13 @@ $(document).ready(function(){
 
 });
 
-
 /* ---- ADD LOCATION TO FIREBASE FROM FORM ---- */
   $('#submit-button').on("click", function(event) {
     event.preventDefault();
 
     var preWebsite = "http://www.";
     name = $('#site-name').val();
-    address = $('#address').val();
+    address = $('#pac-input').val();
     website = $('#website').val();
     genre = $("input[name='genre']:checked").val();
     description = $('#description').val();
@@ -264,7 +284,6 @@ $(document).ready(function(){
     var dotCounter = 0, slashCounter = 0;
     var webStart;
     for(var i = 0; i < website.length; i++) {
-        console.log(website.charAt(i));
         if (website.charAt(i) === ".") {
             if (webStart === undefined) { 
             webStart = i+1;
@@ -295,7 +314,6 @@ $(document).ready(function(){
         url: queryURL,
         method: "GET"
         }).then(function(response) {
-        //console.log(response);
         lat = response.results[0].geometry.location.lat;
         lon = response.results[0].geometry.location.lng;
 
@@ -326,3 +344,4 @@ $(document).ready(function(){
     $('#genre').prop("", 0); //Sets the first option as selected
     //$('#genre').material_select();        //Update material select
 });
+

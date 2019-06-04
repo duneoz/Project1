@@ -39,6 +39,10 @@ h5 {
     text-align: right;
 }
 
+#twitter-card {
+    height: 475px;
+}
+
 .s3 {
     width: 25%;
 }
@@ -47,10 +51,7 @@ h5 {
     width: 100%;
 }
 
-#txt {
-    border:none;
-    outline:none;
- }
- label[for="txt"] {
-    padding: 0 0 0 5px;
- }
+.pac-container {
+    z-index: 1005;
+}
+
