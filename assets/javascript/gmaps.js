@@ -180,6 +180,9 @@ function initMap() {
             });
             breweries.push(marker); 
             marker.addListener('click', function() {
+                for (i=0;i<allInfos.length;i++){
+                    allInfos[i].close();
+                }
                 infowindow.open(map, marker);
                 setTweets(newSite.handle);
             }); 
@@ -253,7 +256,6 @@ function initMap() {
 }
 
 /* --- HTML FUNCTIONALITY --- */
-
 $(document).ready(function(){
     $('.sidenav').sidenav();
   });
@@ -262,7 +264,6 @@ $(document).ready(function(){
     $('select').formSelect();
 
 });
-
 
 /* ---- ADD LOCATION TO FIREBASE FROM FORM ---- */
   $('#submit-button').on("click", function(event) {
